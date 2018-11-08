@@ -67,6 +67,63 @@ class _MyHomePageState extends State<MyHomePage> {
     return 'signInAnonymously succeeded: $user';
   }
 
+  Future<String> _testSignInEmail() async {
+    final FirebaseUser user = await _auth.signInWithEmailAndPassword(
+        email: 'steve.macdonald1@gmail', password: 'ILoveT4G');
+    assert(user != null);
+    assert(user.isAnonymous);
+    assert(!user.isEmailVerified);
+    assert(await user.getIdToken() != null);
+    if (Platform.isIOS) {
+      // Anonymous auth doesn't show up as a provider on iOS
+      assert(user.providerData.isEmpty);
+    } else if (Platform.isAndroid) {
+      // Anonymous auth does show up as a provider on Android
+      assert(user.providerData.length == 1);
+      assert(user.providerData[0].providerId == 'firebase');
+      assert(user.providerData[0].uid != null);
+      assert(user.providerData[0].displayName == null);
+      assert(user.providerData[0].photoUrl == null);
+      assert(user.providerData[0].email == null);
+    }
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+
+    return 'signInAnonymously succeeded: $user';
+  }
+
+  Future<String> _testSignUpWithEmail() async {
+    try {
+      final FirebaseUser user = await _auth.createUserWithEmailAndPassword(
+          email: 'steve.macdonald88@t4g.com', password: 'ILoveT4G');
+      assert(user != null);
+      assert(user.isAnonymous);
+      assert(!user.isEmailVerified);
+      assert(await user.getIdToken() != null);
+      if (Platform.isIOS) {
+        // Anonymous auth doesn't show up as a provider on iOS
+        assert(user.providerData.isEmpty);
+      } else if (Platform.isAndroid) {
+        // Anonymous auth does show up as a provider on Android
+        assert(user.providerData.length == 1);
+        assert(user.providerData[0].providerId == 'firebase');
+        assert(user.providerData[0].uid != null);
+        assert(user.providerData[0].displayName == null);
+        assert(user.providerData[0].photoUrl == null);
+        assert(user.providerData[0].email == null);
+        final FirebaseUser currentUser = await _auth.currentUser();
+        assert(user.uid == currentUser.uid);
+
+        return 'signUpWithEmail succeeded: $user';
+      }
+    } catch (e) {
+      print(e.toString());
+      return 'error';
+    }
+    return null;
+  }
+
   Future<String> _testSignInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
@@ -158,6 +215,13 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 setState(() {
                   _message = _testSignInWithGoogle();
+                });
+              }),
+          MaterialButton(
+              child: const Text('Test signUpWithEmail'),
+              onPressed: () {
+                setState(() {
+                  _message = _testSignUpWithEmail();
                 });
               }),
           MaterialButton(
