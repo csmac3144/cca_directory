@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "19242634733",
+    "firebase_url": "https://cca-directory.firebaseio.com",
+    "project_id": "cca-directory",
+    "storage_bucket": "cca-directory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19242634733:android:5a3fa361a8fea909",
+        "android_client_info": {
+          "package_name": "ca.formatec.ccadir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19242634733-ipvhs223vn97eo92u20abefqsv6j0idu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.formatec.ccadir",
+            "certificate_hash": "c757e6e668e58d3268b9e82f51ed6372696aa09e"
+          }
+        },
+        {
+          "client_id": "19242634733-gjafqq5epvoemjhtr5rqbteln4vd093m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtziuGpuubDqflhbKP5k8JrobmspzbvHw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19242634733-gjafqq5epvoemjhtr5rqbteln4vd093m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
