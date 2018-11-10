@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>19242634733-2orgch97qka843pa2me54svd3v23m9q3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.19242634733-2orgch97qka843pa2me54svd3v23m9q3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>19242634733-hdu18h283jrkcpmqbe8pove2up0jnreb.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA4FUW1CZZ6nLtgZ3i2cAGjKaPLqb8S1Pw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>19242634733</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ca.formatec.ccadir</string>
+	<key>PROJECT_ID</key>
+	<string>cca-directory</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cca-directory.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:19242634733:ios:5a3fa361a8fea909</string>
+	<key>DATABASE_URL</key>
+	<string>https://cca-directory.firebaseio.com</string>
+</dict>
+</plist>
