@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:cca_directory/auth.dart';
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -21,13 +23,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Firebase Auth Demo',
-      home: MyHomePage(title: 'Firebase Auth Demo'),
+      home: MyHomePage(title: 'CCA Sign In', auth: new Auth(),),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key key, this.auth, this.title}) : super(key: key);
+  final AuthImpl auth;
 
   final String title;
 
@@ -37,7 +40,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Future<String> _message = Future<String>.value('');
-  TextEditingController _smsCodeController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   String verificationId;
@@ -46,68 +48,69 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
   Future<String> _testSignUpWithEmail() async {
-    try {
-      final FirebaseUser user = await _auth.createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
-      assert(user != null);
-      assert(!user.isAnonymous);
-      // assert(user.isEmailVerified);
-      assert(await user.getIdToken() != null);
-      if (Platform.isIOS) {
-        // Anonymous auth doesn't show up as a provider on iOS
-        assert(user.providerData.isEmpty);
-      } else if (Platform.isAndroid) {
-        // Anonymous auth does show up as a provider on Android
-        assert(user.providerData.length == 2);
-        assert(user.providerData[0].providerId == 'firebase');
-        assert(user.providerData[0].uid != null);
-        assert(user.providerData[0].displayName == null);
-        assert(user.providerData[0].photoUrl == null);
-        assert(user.providerData[0].email != null);
-      }
-      final FirebaseUser currentUser = await _auth.currentUser();
-      await currentUser.sendEmailVerification();
-      assert(user.uid == currentUser.uid);
+    return await widget.auth.signUp(_emailController.text, _passwordController.text);
+    // try {
+    //   final FirebaseUser user = await _auth.createUserWithEmailAndPassword(
+    //       email: _emailController.text, password: _passwordController.text);
+    //   assert(user != null);
+    //   assert(!user.isAnonymous);
+    //   // assert(user.isEmailVerified);
+    //   assert(await user.getIdToken() != null);
+    //   if (Platform.isIOS) {
+    //     // Anonymous auth doesn't show up as a provider on iOS
+    //     assert(user.providerData.isEmpty);
+    //   } else if (Platform.isAndroid) {
+    //     // Anonymous auth does show up as a provider on Android
+    //     assert(user.providerData.length == 2);
+    //     assert(user.providerData[0].providerId == 'firebase');
+    //     assert(user.providerData[0].uid != null);
+    //     assert(user.providerData[0].displayName == null);
+    //     assert(user.providerData[0].photoUrl == null);
+    //     assert(user.providerData[0].email != null);
+    //   }
+    //   final FirebaseUser currentUser = await _auth.currentUser();
+    //   await currentUser.sendEmailVerification();
+    //   assert(user.uid == currentUser.uid);
 
-      return 'signUpWithEmail succeeded: $user';
+    //   return 'signUpWithEmail succeeded: $user';
 
-    } catch (e) {
-      print(e.toString());
-      return e.message;
-    }
+    // } catch (e) {
+    //   print(e.toString());
+    //   return e.message;
+    // }
   }
 
   Future<String> _testSignInWithEmail() async {
-    try {
-      final FirebaseUser user = await _auth.signInWithEmailAndPassword(
-          email: _emailController.text, password:  _passwordController.text);
-      assert(user != null);
-      assert(user.email != null);
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
+    return await widget.auth.signIn(_emailController.text, _passwordController.text);
+    // try {
+    //   final FirebaseUser user = await _auth.signInWithEmailAndPassword(
+    //       email: _emailController.text, password:  _passwordController.text);
+    //   assert(user != null);
+    //   assert(user.email != null);
+    //   assert(!user.isAnonymous);
+    //   assert(await user.getIdToken() != null);
 
 
-      if (Platform.isIOS) {
-        // Anonymous auth doesn't show up as a provider on iOS
-        //assert(user.providerData.isEmpty);
-      } else if (Platform.isAndroid) {
-        // Anonymous auth does show up as a provider on Android
-        assert(user.providerData.length == 2);
-        assert(user.providerData[0].providerId == 'firebase');
-        assert(user.providerData[0].uid != null);
-        assert(user.providerData[0].displayName == null);
-        assert(user.providerData[0].photoUrl == null);
-        assert(user.providerData[0].email != null);
-      }
-        final FirebaseUser currentUser = await _auth.currentUser();
-        assert(user.uid == currentUser.uid);
+    //   if (Platform.isIOS) {
+    //     // Anonymous auth doesn't show up as a provider on iOS
+    //     //assert(user.providerData.isEmpty);
+    //   } else if (Platform.isAndroid) {
+    //     // Anonymous auth does show up as a provider on Android
+    //     assert(user.providerData.length == 2);
+    //     assert(user.providerData[0].providerId == 'firebase');
+    //     assert(user.providerData[0].uid != null);
+    //     assert(user.providerData[0].displayName == null);
+    //     assert(user.providerData[0].photoUrl == null);
+    //     assert(user.providerData[0].email != null);
+    //   }
+    //     final FirebaseUser currentUser = await _auth.currentUser();
+    //     assert(user.uid == currentUser.uid);
 
-        return 'signInWithEmail succeeded: $user';
+    //     return 'signInWithEmail succeeded: $user';
 
-    } catch (e) {
-      print(e.toString());
-      return e.message;
-    }
+    // } catch (e) {
+    //   return e.message;
+    // }
   }
 
   Future<String> _testSignInWithGoogle() async {
