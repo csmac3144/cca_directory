@@ -81,33 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<String> _testSignInWithEmail() async {
-    return await widget.auth.signIn(_emailController.text, _passwordController.text);
+    return await widget.auth.signIn(_emailController.text, _passwordController.text)
+      .then((onValue) {
+        return onValue;
+      }).catchError((e) {
+      return e.message;
+    });
     // try {
-    //   final FirebaseUser user = await _auth.signInWithEmailAndPassword(
-    //       email: _emailController.text, password:  _passwordController.text);
-    //   assert(user != null);
-    //   assert(user.email != null);
-    //   assert(!user.isAnonymous);
-    //   assert(await user.getIdToken() != null);
-
-
-    //   if (Platform.isIOS) {
-    //     // Anonymous auth doesn't show up as a provider on iOS
-    //     //assert(user.providerData.isEmpty);
-    //   } else if (Platform.isAndroid) {
-    //     // Anonymous auth does show up as a provider on Android
-    //     assert(user.providerData.length == 2);
-    //     assert(user.providerData[0].providerId == 'firebase');
-    //     assert(user.providerData[0].uid != null);
-    //     assert(user.providerData[0].displayName == null);
-    //     assert(user.providerData[0].photoUrl == null);
-    //     assert(user.providerData[0].email != null);
-    //   }
-    //     final FirebaseUser currentUser = await _auth.currentUser();
-    //     assert(user.uid == currentUser.uid);
-
-    //     return 'signInWithEmail succeeded: $user';
-
+    //   return await widget.auth.signIn(_emailController.text, _passwordController.text);
     // } catch (e) {
     //   return e.message;
     // }

@@ -13,7 +13,7 @@ class Auth implements AuthImpl {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<String> signIn(String email, String password) async {
-    try {
+    // throw new Exception("Test");
       final FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password:  password);
       assert(user != null);
@@ -39,17 +39,9 @@ class Auth implements AuthImpl {
 
         print('signInWithEmail succeeded: $user');
         return user.uid;
-
-    } catch (e) {
-      return e.message;
-    }
-
-    // FirebaseUser user = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    // return user.uid;
   }
 
   Future<String> signUp(String email, String password) async {
-    try {
       final FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
       assert(user != null);
@@ -74,14 +66,6 @@ class Auth implements AuthImpl {
 
       print('signUpWithEmail succeeded: $user');
       return currentUser.uid;
-
-    } catch (e) {
-      print(e.toString());
-      return e.message;
-    }
-
-    // FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-    // return user.uid;
   }
 
   Future<String> getCurrentUser() async {
