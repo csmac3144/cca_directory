@@ -70,6 +70,10 @@ class Auth implements AuthImpl {
 
   Future<String> getCurrentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
+    if (user == null)
+    {
+      return null;
+    }
     return user.uid;
   }
 

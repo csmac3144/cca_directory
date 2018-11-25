@@ -162,10 +162,10 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(30.0),
                 shadowColor: Colors.blueAccent.shade100,
                 elevation: 5.0,
+                color: Colors.blue,
                 child: new MaterialButton(
                   minWidth: 200.0,
                   height: 42.0,
-                  color: Colors.blue,
                   child: new Text('Login',
                       style:
                           new TextStyle(fontSize: 20.0, color: Colors.white)),
@@ -179,10 +179,10 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(30.0),
                 shadowColor: Colors.lightBlueAccent.shade100,
                 elevation: 5.0,
+                color: Colors.blue,
                 child: new MaterialButton(
                   minWidth: 200.0,
                   height: 42.0,
-                  color: Colors.blue,
                   child: new Text('Create account',
                       style:
                           new TextStyle(fontSize: 20.0, color: Colors.white)),
