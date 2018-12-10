@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cca_directory/auth.dart';
+import 'package:cca_directory/simple.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth, this.onSignedIn});
   final AuthImpl auth;
   final VoidCallback onSignedIn;
-
+  
   @override
   State<StatefulWidget> createState() => new _LoginPageState();
 }
@@ -32,9 +33,15 @@ class _LoginPageState extends State<LoginPage> {
     if (validateAndSave()) {
       try {
         if (_formMode == FormMode.SIGNIN) {
-          String userId =
-              await widget.auth.signIn(_email, _password);
-          print('Signed in: $userId');
+          try {
+            String userId =
+                await widget.auth.signIn(_email, _password);
+            print('Signed in: $userId');
+            
+          } catch (e) {
+            _showDialog(e.message);
+            return;
+          }
         } else {
           String userId = await widget.auth
               .signUp(_email, _password);
@@ -59,6 +66,32 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _formMode = FormMode.SIGNIN;
     });
+  }
+
+
+  void _showDialog(String alertMessage) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text(alertMessage,style: TextStyle(
+                      color: Colors.red,
+                    )),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
